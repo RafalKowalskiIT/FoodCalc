@@ -7,7 +7,8 @@ using FoodCalc.Entities;
 
 namespace FoodCalc.Repositories
 {
-    public class DishRepository<T>
+    public class DishRepository<T> : IRepository<T> 
+        where T : class, IEntity
     {
         private readonly List<T> _items = new();
 
@@ -16,7 +17,7 @@ namespace FoodCalc.Repositories
             return _items.ToList();
         }
 
-        public T GetById(int ID)
+        public T GetByID(int ID)
         {
             return _items.Single(item => item.ID == ID);
         }

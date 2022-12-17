@@ -11,6 +11,12 @@ namespace FoodCalc.Data
     public class FoodCalcAppDbContext : DbContext
     {
         public DbSet<Dish> Dishes => Set<Dish>();
-        public DbSet<Ingredients> Ingredients => DbSet<Ingredients>();
+        public DbSet<Ingredients> Ingredients => Set<Ingredients>();
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionalBuilder)
+        {
+            base.OnConfiguring(optionalBuilder);
+            optionalBuilder.UseInMemoryDatabase("SorageAppDb");
+        }
     }
 }

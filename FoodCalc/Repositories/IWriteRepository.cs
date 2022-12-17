@@ -11,6 +11,6 @@ namespace FoodCalc.Repositories
     {
         void Add(T item);
         void Remove(T item);
-        void Save()
+        void Save();
     }
 }
