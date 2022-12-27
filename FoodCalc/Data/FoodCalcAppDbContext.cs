@@ -1,5 +1,6 @@
 ﻿using FoodCalc.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,10 @@ namespace FoodCalc.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionalBuilder)
         {
-            base.OnConfiguring(optionalBuilder);
-            optionalBuilder.UseInMemoryDatabase("SorageAppDb");
+            // base.OnConfiguring(optionalBuilder);
+            // optionalBuilder.UseInMemoryDatabase("SorageAppDb");
+            optionalBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\IT\PracaDomowa\FoodCalc\FoodCalc\FoodCalcAppDb.mdf;Integrated Security=True");
         }
     }
 }
+ 
