@@ -17,7 +17,7 @@ void DishRepository_ItemRemoved(object? sender, Dish e)
 void DishRepository_ItemAdded(object? sender, Dish e)
 {
     Console.WriteLine($"Dish added => {e.Name} from {sender?.GetType().Name}");
-}
+} 
 
 Console.OutputEncoding = Encoding.UTF8;
 Console.ForegroundColor = ConsoleColor.Green;
