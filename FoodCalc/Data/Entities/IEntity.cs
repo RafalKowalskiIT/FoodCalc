@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCalc.Entities
+namespace FoodCalc.Data.Entities
 {
     public interface IEntity
     {

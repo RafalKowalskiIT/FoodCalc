@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FoodCalc.Entities;
+using FoodCalc.Data.Entities;
 
-namespace FoodCalc.Repositories
+namespace FoodCalc.Data.Repositories
 {
     public class DishRepository<T> : IRepository<T> 
         where T : class, IEntity

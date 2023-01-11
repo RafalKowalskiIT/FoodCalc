@@ -1,4 +1,4 @@
-﻿using FoodCalc.Entities;
+﻿using FoodCalc.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;

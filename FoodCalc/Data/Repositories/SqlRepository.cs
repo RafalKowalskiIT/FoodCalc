@@ -1,5 +1,5 @@
 ﻿using FoodCalc.Data;
-using FoodCalc.Entities;
+using FoodCalc.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace FoodCalc.Repositories
+namespace FoodCalc.Data.Repositories
 {
     public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     {

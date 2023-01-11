@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCalc.Repositories.Extensions
+namespace FoodCalc.Data.Repositories.Extensions
 {
     public static class RepositoryExtensions
     {

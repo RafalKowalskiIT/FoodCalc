@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCalc.Entities
+namespace FoodCalc.Data.Entities
 {
-    public class Ingredients : EntityBase
+    public class Dish : EntityBase
     {
         public string Name { get; set; }
         public int Calories { get; set; }
@@ -17,3 +17,4 @@ namespace FoodCalc.Entities
         public override string ToString() => $"Id: {ID}, Name: {Name}, Kcal: {Calories}, B: {Proteins}, W: {Carbs}, T: {Fat}";
     }
 }
+

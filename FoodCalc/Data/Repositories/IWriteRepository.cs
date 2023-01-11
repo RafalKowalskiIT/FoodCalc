@@ -1,11 +1,11 @@
-﻿using FoodCalc.Entities;
+﻿using FoodCalc.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCalc.Repositories
+namespace FoodCalc.Data.Repositories
 {
     public interface IWriteRepository<in T> where T : class, IEntity
     {

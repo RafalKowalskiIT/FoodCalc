@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace FoodCalc.Entities.Extensions
+namespace FoodCalc.Data.Entities.Extensions
 {
     public static class EntityExtensions
     {
