@@ -1,4 +1,5 @@
-﻿using FoodCalc.Data.Entities;
+﻿using FoodCalc.Components.CsvReader;
+using FoodCalc.Data.Entities;
 using FoodCalc.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,36 +11,63 @@ namespace FoodCalc
 {
     public class App : IApp
     {
-        private readonly IRepository<Dish> _dishRepository;
+        private readonly ICsvReader _csvReader;
 
-        public App(IRepository<Dish> dishRepository)
+        public App(ICsvReader csvReader)
         {
-            _dishRepository = dishRepository;
+            _csvReader = csvReader;
         }
         public void Run()
         {
-            Console.WriteLine("Hi, I'm here");
+            var dishes = _csvReader.ProcessDish("Resources\\Files\\dishes.csv");
+            var ingredients = _csvReader.ProcessIngredients("Resources\\Files\\ingredients.csv");
+            var recipes = _csvReader.ProcessRecipes("Resources\\Files\\recipes.csv");
 
-            var dishes = new[]
+            //var groups = dishes
+            //    .GroupBy(x => x.Name)
+            //    .Select(g => new
+            //    {
+            //        Name = g.Key,
+            //        Max =g.Max(c=>c.Proteins),
+            //        Min =g.Min(c=>c.Fat),
+
+            //    })
+            //    .OrderBy(x=>x.Max);
+
+            //foreach (var group in groups)
+            //{
+            //    Console.WriteLine($"{group.Name}");
+            //    Console.WriteLine($"\tProtein:{group.Max}");
+            //    Console.WriteLine($"\tFat:{group.Min}");
+
+            //}
+
+            var mealsRec = dishes.Join(
+                recipes,
+                x => x.Name,
+                x => x.Name,
+                (dish, recipe) =>
+                new
+                {
+                    dish.Name,
+                    recipe.Ingredient1,
+                    recipe.Ingredient2,
+                    recipe.Ingredient3,
+
+                })
+                .OrderByDescending(x => x.Name)
+                .ThenBy(x => x.Ingredient1);
+
+            foreach (var recipe in recipes)
             {
-                new Dish { Name = "Pizza", Calories = 400, Carbs = 100, Fat = 50, Proteins = 100, Price = 5, },
-                new Dish { Name = "Omlet", Calories = 400, Carbs = 100, Fat = 50, Proteins = 100, Price = 5, },
-                new Dish { Name = "Eggs", Calories = 400, Carbs = 100, Fat = 50, Proteins = 100, Price = 5, },
-
-             };
-
-            foreach (var dish in dishes)
-            {
-                _dishRepository.Add(dish);
+                Console.WriteLine($"Name: {recipe.Name}");
+                Console.WriteLine($"Ingredients: {recipe.Ingredient1} +\t {recipe.Ingredient2} +\t {recipe.Ingredient3}");
+                              
             }
+                
 
-            _dishRepository.Save();
+                
 
-            var items = _dishRepository.GetAll();
-            foreach(var item in items)
-            {
-                Console.WriteLine(item);
-            }
         }
     }
 }

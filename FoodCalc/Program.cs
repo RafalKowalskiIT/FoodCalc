@@ -1,4 +1,5 @@
 ﻿using FoodCalc;
+using FoodCalc.Components.CsvReader;
 using FoodCalc.Data.Entities;
 using FoodCalc.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 var services = new ServiceCollection();
 services.AddSingleton<IApp, App>();
 services.AddSingleton<IRepository<Dish>, DishRepository<Dish>>();
+services.AddSingleton<ICsvReader, CsvReader>();
 
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;
