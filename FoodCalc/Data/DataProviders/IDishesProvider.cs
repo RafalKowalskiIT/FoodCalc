@@ -11,5 +11,7 @@ namespace FoodCalc.Data.DataProviders
     {
         List<Dish> OrderByName();
         List<Dish> OrderByCalories();
+        List<Dish> OrderByFat();
+        List<Dish> OrderByProteins();
     }
 }

@@ -21,9 +21,14 @@ services.AddSingleton<IMainMenuHandler, MainMenuHandler>();
 services.AddSingleton<IDishMenuHandler, DishMenuHandler>();
 services.AddSingleton<IIngredientsMenuHandler, IngredientsMenuHandler>();
 services.AddSingleton<IRecipeMenuHandler, RecipeMenuHandler>();
+services.AddSingleton<IDishesDetailsHandler, DishesDetailsHandler>();
+services.AddSingleton<IIngredientsDetailsHandler, IngredientsDetailsHandler>();
+services.AddSingleton<IRecipeDetailsHandler, RecipeDetailsHandler>();
 services.AddSingleton<IEventsHandler, EventsHandler>();
 services.AddSingleton<IXmlHandler, XmlHandler>();
 services.AddSingleton<IXmlMenuHandler, XmlMenuHandler>();
+services.AddSingleton<IDataHandler, DataHandler>();
+
 
 services.AddSingleton<ICsvReader, CsvReader>();
 services.AddDbContext<FoodCalcAppDbContext>();

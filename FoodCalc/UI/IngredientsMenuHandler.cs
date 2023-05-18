@@ -1,4 +1,5 @@
-﻿using FoodCalc.Data.DataProviders;
+﻿
+using FoodCalc.Data.DataProviders;
 using FoodCalc.Data.Entities;
 using FoodCalc.Data.Repositories;
 using System;
@@ -9,27 +10,27 @@ using System.Threading.Tasks;
 
 namespace FoodCalc.UI
 {
-    public class DishMenuHandler : IDishMenuHandler
+    public class IngredientsMenuHandler : IIngredientsMenuHandler
     {
-        private readonly IRepository<Dish> _dishRepository;
-        private readonly IDishesProvider _dishesProvider;
-        private readonly IDishesDetailsHandler _dishesDetailsHandler;
+        private readonly IRepository<Ingredients> _ingredientsRepository;
+        private readonly IIngredientsProvider _ingredientsProvider;
+        private readonly IIngredientsDetailsHandler _ingredientsDetailsHandler;
 
-        public DishMenuHandler(IRepository<Dish> dishRepository, IDishesProvider dishesProvider, IDishesDetailsHandler dishesDetailsHandler)
+        public IngredientsMenuHandler(IRepository<Ingredients> ingredientsRepository, IIngredientsProvider ingredientsProvider, IIngredientsDetailsHandler ingredientsDetailsHandler)
         {
-            _dishRepository = dishRepository;
-            _dishesProvider = dishesProvider;
-            _dishesDetailsHandler = dishesDetailsHandler;
+            _ingredientsRepository = ingredientsRepository;
+            _ingredientsProvider = ingredientsProvider;
+            _ingredientsDetailsHandler = ingredientsDetailsHandler;
         }
         public void SelectYourOption()
         {
             Console.Clear();
-            string text = "DISHES MAIN MENU\n";
+            string text = "INGREDIENTS MAIN MENU\n";
             string text2 = "Please choose your action\n" +
-                "1. List of all dishes in database\n" +
-                "2. Add new dish to database\n" +
-                "3. Find dish by id\n" +
-                "4. Show more dish data\n" +
+                "1. List of all ingredients in database\n" +
+                "2. Add new ingredients to database\n" +
+                "3. Find ingredient by id\n" +
+                "4. Show more ingredients data\n" +
                 "5. Save and go back to main menu";
 
 
@@ -42,20 +43,20 @@ namespace FoodCalc.UI
             {
                 case "1":
                     Console.Clear();
-                    WriteAllToConsole(_dishRepository);
+                    WriteAllToConsole(_ingredientsRepository);
                     break;
                 case "2":
-                    AddNewDish(_dishRepository);
+                    AddNewIngredients(_ingredientsRepository);
                     break;
                 case "3":
-                    FindDishById(_dishRepository);
+                    FindIngredientsById(_ingredientsRepository);
                     break;
                 case "4":
-                    _dishesDetailsHandler.GetDishesDetails();
+                    _ingredientsDetailsHandler.GetIngredientsDetails();
                     break;
                 case "5":
                     Console.Clear();
-                    CloseAndSave(_dishRepository);
+                    CloseAndSave(_ingredientsRepository);
                     break;
                 default:
                     Console.WriteLine("Incorrect command");
@@ -78,20 +79,20 @@ namespace FoodCalc.UI
             }
         }
 
-        private static void WriteAllToConsole(IRepository<Dish> dishRepository)
+        private static void WriteAllToConsole(IRepository<Ingredients> ingredientsRepository)
         {
-            Console.WriteLine("\n--- List of all dishes ---");
-            var items = dishRepository.GetAll();
+            Console.WriteLine("\n--- List of all ingredients ---");
+            var items = ingredientsRepository.GetAll();
             if (items.ToList().Count == 0)
             {
-                Console.WriteLine("No dishes found");
+                Console.WriteLine("No ingredient found");
             }
             foreach (var item in items)
             {
                 Console.WriteLine(item);
             }
         }
-        private static void AddNewDish(IRepository<Dish> dishRepository)
+        private static void AddNewIngredients(IRepository<Ingredients> ingredientsRepository)
         {
             Console.WriteLine("Name: ");
             var name = Console.ReadLine();
@@ -104,7 +105,7 @@ namespace FoodCalc.UI
             Console.WriteLine("Proteins: ");
             var proteins = int.Parse(Console.ReadLine());
 
-            var newDish = new Dish
+            var newIngredients = new Ingredients
             {
                 Name = name,
                 Calories = calories,
@@ -113,14 +114,14 @@ namespace FoodCalc.UI
                 Proteins = proteins,
 
             };
-            dishRepository.Add(newDish);
+            ingredientsRepository.Add(newIngredients);
 
         }
-        private static Dish? FindDishById(IRepository<Dish> dishRepository)
+        private static Ingredients? FindIngredientsById(IRepository<Ingredients> ingredientsRepository)
         {
             while (true)
             {
-                Console.WriteLine("Enter the ID of the dish you want to find");
+                Console.WriteLine("Enter the ID of the ingredient you want to find");
                 var selectedId = Console.ReadLine();
                 var isParsed = int.TryParse(selectedId, out int selectedValue);
                 if (!isParsed)
@@ -129,28 +130,28 @@ namespace FoodCalc.UI
                 }
                 else
                 {
-                    var dish = dishRepository.GetByID(selectedValue);
-                    if (dish != null)
+                    var ingredient = ingredientsRepository.GetByID(selectedValue);
+                    if (ingredient != null)
                     {
-                        Console.WriteLine(dish.ToString());
+                        Console.WriteLine(ingredient.ToString());
                     }
                     else
                     {
-                        Console.WriteLine("There is no dish with given id\n");
+                        Console.WriteLine("There is no ingredient with given id\n");
                     }
-                    return dish;
+                    return ingredient;
                 }
             }
         }
-        private static bool CloseAndSave(IRepository<Dish> dishRepository)
+        private static bool CloseAndSave(IRepository<Ingredients> ingredientRepository)
         {
             while (true)
             {
 
-                dishRepository.Save("Dishes");
+                ingredientRepository.Save("Ingredients");
                     Console.WriteLine("All changes has been saved in file successfully\n");
                     return false;
-                
+
             }
         }
         

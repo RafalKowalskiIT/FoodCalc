@@ -29,5 +29,16 @@ namespace FoodCalc.Data.DataProviders
             var dishes = _dishRepository.GetAll();
             return dishes.OrderBy(dishes => dishes.Name).ToList();
         }
+        public List<Dish> OrderByFat()
+        {
+            var dishes = _dishRepository.GetAll();
+            return dishes.OrderBy(dishes => dishes.Fat).ThenBy(dishes => dishes.Name).ToList();
+        }
+        public List<Dish> OrderByProteins()
+        {
+            var dishes = _dishRepository.GetAll();
+            return dishes.OrderBy(dishes => dishes.Proteins).ThenBy(dishes => dishes.Name).ToList();
+        }
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using FoodCalc.Components.CsvReader.Extensions;
-using FoodCalc.Components.CsvReader.Models;
+﻿using FoodCalc.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

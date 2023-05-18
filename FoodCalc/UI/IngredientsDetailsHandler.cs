@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace FoodCalc.UI
 {
-    public class DishesDetailsHandler : IDishesDetailsHandler
+    public class IngredientsDetailsHandler : IIngredientsDetailsHandler
     {
-        private readonly IDishesProvider _dishesProvider;
+        private readonly IIngredientsProvider _ingredientsProvider;
         private readonly IMainMenuHandler _mainMenuHandler;
 
-        public DishesDetailsHandler(IDishesProvider dishesProvider, IMainMenuHandler mainMenuHandler)
+        public IngredientsDetailsHandler(IIngredientsProvider ingredientsProvider, IMainMenuHandler mainMenuHandler)
         {
-            _dishesProvider = dishesProvider;
+            _ingredientsProvider = ingredientsProvider;
             _mainMenuHandler = mainMenuHandler;
         }
 
-        public void GetDishesDetails()
+        public void GetIngredientsDetails()
         {
             Console.Clear();
-            string text = "DISHES DETAILS MAIN MENU\n";
+            string text = "INGREDIENTS DETAILS MAIN MENU\n";
             string text2 = "Please choose your action\n" +
-                "1. List of all dishes in database ordered by names\n" +
-                "2. List of all dishes in database ordered by calories\n" +
-                "3. List of all dishes in database ordered by proteins\n" +
-                "4. List of all dishes in database ordered by fat\n" +
+                "1. List of all ingredients in database ordered by names\n" +
+                "2. List of all ingredients in database ordered by calories\n" +
+                "3. List of all ingredients in database ordered by proteins\n" +
+                "4. List of all ingredients in database ordered by fat\n" +
                 "5. Go back to main menu";
 
 
@@ -77,38 +77,38 @@ namespace FoodCalc.UI
 
         private void OrderByCalories()
         {
-            Console.WriteLine("\nList of all dishes ordered by calories\n");
-            var dishes = _dishesProvider.OrderByCalories();
-            foreach (var employee in dishes)
+            Console.WriteLine("\nList of all ingredients ordered by calories\n");
+            var ingredients = _ingredientsProvider.OrderByCalories();
+            foreach (var employee in ingredients)
             {
-                Console.WriteLine(dishes);
+                Console.WriteLine(ingredients);
             }
         }
         private void OrderByName()
         {
-            Console.WriteLine("\nList of all dishes ordered by name\n");
-            var dishes = _dishesProvider.OrderByName();
-            foreach (var employee in dishes)
+            Console.WriteLine("\nList of all ingredients ordered by name\n");
+            var ingredients = _ingredientsProvider.OrderByName();
+            foreach (var employee in ingredients)
             {
-                Console.WriteLine(dishes);
+                Console.WriteLine(ingredients);
             }
         }
         private void OrderByProteins()
         {
-            Console.WriteLine("\nList of all dishes ordered by proteins\n");
-            var dishes = _dishesProvider.OrderByProteins();
-            foreach (var employee in dishes)
+            Console.WriteLine("\nList of all ingredients ordered by proteins\n");
+            var ingredients = _ingredientsProvider.OrderByProteins();
+            foreach (var employee in ingredients)
             {
-                Console.WriteLine(dishes);
+                Console.WriteLine(ingredients);
             }
         }
         private void OrderByFat()
         {
             Console.WriteLine("\nList of all dishes ordered by fat\n");
-            var dishes = _dishesProvider.OrderByFat();
-            foreach (var employee in dishes)
+            var ingredients = _ingredientsProvider.OrderByFat();
+            foreach (var employee in ingredients)
             {
-                Console.WriteLine(dishes);
+                Console.WriteLine(ingredients);
             }
         }
     }
