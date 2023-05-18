@@ -8,12 +8,20 @@ namespace FoodCalc.Data.Entities
 {
     public class Ingredients : EntityBase
     {
-        public string Name { get; set; }
-        public int Calories { get; set; }
-        public int Proteins { get; set; }
-        public int Carbs { get; set; }
-        public int Fat { get; set; }
-        public int Price { get; set; }
-        public override string ToString() => $"Id: {ID}, Name: {Name}, Kcal: {Calories}, B: {Proteins}, W: {Carbs}, T: {Fat}";
+        public string? Name { get; set; }
+        public double Calories { get; set; }
+        public double Carbs { get; set; }
+        public double Fat { get; set; }
+        public double Proteins { get; set; }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new();
+            sb.AppendLine($"Id: {ID}");
+            sb.AppendLine($"   Name: {Name}  Calories: {Calories}");
+            sb.AppendLine($"   Macronutrients: W {Carbs}g T {Fat}g B {Proteins}g");
+
+            return sb.ToString();
+        }
     }
 }

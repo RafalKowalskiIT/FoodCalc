@@ -11,6 +11,7 @@ namespace FoodCalc.Data.Repositories
     {
         void Add(T item);
         void Remove(T item);
-        void Save();
+        void Save(string description);
+        void SaveToAuditFile(string description, T e);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FoodCalc.Data.Entities;
+﻿
+using FoodCalc.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -13,12 +14,11 @@ namespace FoodCalc.Data
     {
         public DbSet<Dish> Dishes => Set<Dish>();
         public DbSet<Ingredients> Ingredients => Set<Ingredients>();
+        public DbSet<Recipe> Recipes => Set<Recipe>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionalBuilder)
-        {
-            // base.OnConfiguring(optionalBuilder);
-            // optionalBuilder.UseInMemoryDatabase("SorageAppDb");
-            optionalBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\IT\PracaDomowa\FoodCalc\FoodCalc\FoodCalcAppDb.mdf;Integrated Security=True");
+        {           
+            optionalBuilder.UseSqlServer(@"Data Source=RAFAL-KOMPUTER\SQLEXPRESS;Initial Catalog=FoodCalcDb;Encrypt=False;Integrated Security=True");
         }
     }
 }

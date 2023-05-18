@@ -1,11 +1,14 @@
 ﻿using FoodCalc.Data;
 using FoodCalc.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
+using FoodCalc.Data.DataProviders;
 
 
 namespace FoodCalc.Data.Repositories
@@ -14,24 +17,24 @@ namespace FoodCalc.Data.Repositories
     {
         private readonly DbSet<T> _dbSet;
         private readonly FoodCalcAppDbContext _dbContex;
-        private readonly Action<T>? _itemAddedCallback;
+        private const string auditFileName = $@"C:\Users\IT\PracaDomowa\FoodCalc\FoodCalc\Data\Audit\Audit.txt";
+        private const string jsonFilePath = $@"C:\Users\IT\PracaDomowa\FoodCalc\FoodCalc\Data\Audit\";
+        public event EventHandler<T>? ItemAdded;
+        public event EventHandler<T>? ItemRemoved;
 
-        public SqlRepository(FoodCalcAppDbContext dbContext, Action<T>? itemAddedCallback = null)
+        public SqlRepository(FoodCalcAppDbContext dbContext)
         {
             _dbContex = dbContext;
-            _dbSet = dbContext.Set<T>();
-            _itemAddedCallback = itemAddedCallback;
+            _dbSet = dbContext.Set<T>();           
         }
 
-        public event EventHandler<T> ItemAdded;
-        public event EventHandler<T> ItemRemoved;
 
         public IEnumerable<T> GetAll()
         {
             return _dbSet.ToList();
         }
 
-        public T GetByID(int ID)
+        public T? GetByID(int ID)
         {
             return _dbSet.Find(ID);
         }
@@ -40,7 +43,6 @@ namespace FoodCalc.Data.Repositories
         {
             _dbSet.Add(item);
             _dbContex.SaveChanges();
-            _itemAddedCallback?.Invoke(item);
             ItemAdded?.Invoke(this, item);
         }
 
@@ -51,9 +53,27 @@ namespace FoodCalc.Data.Repositories
             ItemRemoved?.Invoke(this, item);
         }
 
-        public void Save()
+        public void Save(string description)
         {
-            _dbContex.SaveChanges();
+            string date = DateTime.Now.ToString("dd-MM-yyyy hh-mm-ss");
+            using (var writer = File.AppendText($"{jsonFilePath}{description} - [{date}]" + ".json"))
+            {
+                foreach (var item in _dbSet)
+                {
+                    string employee = JsonSerializer.Serialize(item);
+                    writer.WriteLine(employee);
+                }
+            }
+            Console.WriteLine($"\n--- All data has been saved in json file ---");
+        }
+
+        public void SaveToAuditFile(string description, T e)
+        {
+            DateTime actualTime = DateTime.Now;
+            using (var auditWriter = File.AppendText(auditFileName))
+            {
+                auditWriter.WriteLine($"{actualTime} - {description} - {e}");
+            }
         }
     }
 }
