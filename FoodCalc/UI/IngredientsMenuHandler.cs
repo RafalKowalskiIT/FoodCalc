@@ -24,55 +24,56 @@ namespace FoodCalc.UI
         }
         public void SelectYourOption()
         {
-            Console.Clear();
-            string text = "INGREDIENTS MAIN MENU\n";
-            string text2 = "Please choose your action\n" +
-                "1. List of all ingredients in database\n" +
-                "2. Add new ingredients to database\n" +
-                "3. Find ingredient by id\n" +
-                "4. Show more ingredients data\n" +
-                "5. Save and go back to main menu";
-
-
-            PrintLinesInCenter(text);
-            Console.ReadKey();
-            Console.Clear();
-            PrintLinesInCenter(text2);
-            var input = Console.ReadLine();
-            switch (input)
+            bool inIngrediensMenu = true;
+            while (inIngrediensMenu)
             {
-                case "1":
-                    Console.Clear();
-                    WriteAllToConsole(_ingredientsRepository);
-                    break;
-                case "2":
-                    AddNewIngredients(_ingredientsRepository);
-                    break;
-                case "3":
-                    FindIngredientsById(_ingredientsRepository);
-                    break;
-                case "4":
-                    _ingredientsDetailsHandler.GetIngredientsDetails();
-                    break;
-                case "5":
-                    Console.Clear();
-                    CloseAndSave(_ingredientsRepository);
-                    break;
-                default:
-                    Console.WriteLine("Incorrect command");
-                    return;
-            }
+                Console.Clear();
+                string text = "INGREDIENTS MAIN MENU\n";
+                string text2 = "Please choose your action\n" +
+                    "1. List of all ingredients in database\n" +
+                    "2. Add new ingredients to database\n" +
+                    "3. Find ingredient by id\n" +
+                    "4. Show more ingredients data\n" +
+                    "5. Save and go back to main menu";
 
+
+                Console.WriteLine(text);
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine(text2);
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        WriteAllToConsole(_ingredientsRepository);
+                        break;
+                    case "2":
+                        AddNewIngredients(_ingredientsRepository);
+                        break;
+                    case "3":
+                        FindIngredientsById(_ingredientsRepository);
+                        break;
+                    case "4":
+                        _ingredientsDetailsHandler.GetIngredientsDetails();
+                        break;
+                    case "5":
+                        CloseAndSave(_ingredientsRepository);
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        continue;
+                }
+            }
             Console.ReadKey();
                                     
         }
         private static void PrintLinesInCenter(params string[] lines)
         {
-            int verticalStart = (Console.WindowHeight - lines.Length) / 2;
+            int verticalStart = (Console.WindowHeight) / 2;
             int verticalPosition = verticalStart;
             foreach (var line in lines)
             {
-                int horizontalStart = (Console.WindowWidth - line.Length) / 2;
+                int horizontalStart = (Console.WindowWidth) / 2;
                 Console.SetCursorPosition(horizontalStart, verticalPosition);
                 Console.Write(line);
                 ++verticalPosition;

@@ -15,7 +15,7 @@ namespace FoodCalc.Data.XmlHandler
         }
         public void CreateXml(string description)
         {
-            if (description == "dish")
+            if (description == "Dishes")
             {
                 var records = _csvReader.ProcessDish(@"Resources\Files\dishes.csv");
                 var document = new XDocument();
@@ -31,8 +31,9 @@ namespace FoodCalc.Data.XmlHandler
                 document.Add(dishes);
                 document.Save("dishes.xml");
                 Console.WriteLine("\n Dummy dish data has been saved in xml file\n");
+                Console.ReadKey();
             }
-            else if(description == "ingredients")
+            else if(description == "Ingredients")
             {
                 var records = _csvReader.ProcessIngredients(@"Resources\Files\ingredients.csv");
                 var document = new XDocument();
@@ -48,6 +49,7 @@ namespace FoodCalc.Data.XmlHandler
                 document.Add(ingredients);
                 document.Save("ingredients.xml");
                 Console.WriteLine("\n Dummy ingredients data has been saved in xml file\n");
+                Console.ReadKey();
             }
             else
             {
@@ -66,13 +68,14 @@ namespace FoodCalc.Data.XmlHandler
                 document.Add(recipes);
                 document.Save("recipes.xml");
                 Console.WriteLine("\n Dummy recipes data has been saved in xml file\n");
+                Console.ReadKey();
             }
         }
 
         public void QueryXml()
         {
             var document = XDocument.Load("dishes.xml");
-            var names = document.Element("Dishes")?.Elements("Dish")
+            var names = document.Element("Dishes")?.Elements("Dishes")
                 .Where(x => x.Attribute("Name")?.Value == "Sałatka meksykańska")
                 .Select(x => x.Attribute("Name")?.Value);
 

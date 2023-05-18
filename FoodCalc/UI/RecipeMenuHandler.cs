@@ -4,6 +4,7 @@ using FoodCalc.Data.Entities;
 using FoodCalc.Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,55 +25,56 @@ namespace FoodCalc.UI
         }
         public void SelectYourOption()
         {
-            Console.Clear();
-            string text = "RECIPES MAIN MENU\n";
-            string text2 = "Please choose your action\n" +
-                "1. List of all recipes in database\n" +
-                "2. Add new recipes to database\n" +
-                "3. Find recipe by id\n" +
-                "4. Show more recipes data\n" +
-                "5. Save and go back to main menu";
-
-
-            PrintLinesInCenter(text);
-            Console.ReadKey();
-            Console.Clear();
-            PrintLinesInCenter(text2);
-            var input = Console.ReadLine();
-            switch (input)
+            bool inRecipeMenu = true;
+            while (inRecipeMenu)
             {
-                case "1":
-                    Console.Clear();
-                    WriteAllToConsole(_recipeRepository);
-                    break;
-                case "2":
-                    AddNewRecipe(_recipeRepository);
-                    break;
-                case "3":
-                    FindRecipeById(_recipeRepository);
-                    break;
-                case "4":
-                    _recipeDetailsHandler.GetRecipeDetails();
-                    break;
-                case "5":
-                    Console.Clear();
-                    CloseAndSave(_recipeRepository);
-                    break;
-                default:
-                    Console.WriteLine("Incorrect command");
-                    return;
-            }
+                Console.Clear();
+                string text = "RECIPES MAIN MENU\n";
+                string text2 = "Please choose your action\n" +
+                    "1. List of all recipes in database\n" +
+                    "2. Add new recipes to database\n" +
+                    "3. Find recipe by id\n" +
+                    "4. Show more recipes data\n" +
+                    "5. Save and go back to main menu";
 
+
+                Console.WriteLine(text);
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine(text2);
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":                        
+                        WriteAllToConsole(_recipeRepository);
+                        break;
+                    case "2":
+                        AddNewRecipe(_recipeRepository);
+                        break;
+                    case "3":
+                        FindRecipeById(_recipeRepository);
+                        break;
+                    case "4":
+                        _recipeDetailsHandler.GetRecipeDetails();
+                        break;
+                    case "5":                        
+                        CloseAndSave(_recipeRepository);
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        continue;
+                }
+            }
             Console.ReadKey();
 
         }
         private static void PrintLinesInCenter(params string[] lines)
         {
-            int verticalStart = (Console.WindowHeight - lines.Length) / 2;
+            int verticalStart = (Console.WindowHeight) / 2;
             int verticalPosition = verticalStart;
             foreach (var line in lines)
             {
-                int horizontalStart = (Console.WindowWidth - line.Length) / 2;
+                int horizontalStart = (Console.WindowWidth) / 2;
                 Console.SetCursorPosition(horizontalStart, verticalPosition);
                 Console.Write(line);
                 ++verticalPosition;

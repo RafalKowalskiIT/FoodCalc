@@ -11,64 +11,64 @@ namespace FoodCalc.UI
     public class IngredientsDetailsHandler : IIngredientsDetailsHandler
     {
         private readonly IIngredientsProvider _ingredientsProvider;
-        private readonly IMainMenuHandler _mainMenuHandler;
 
-        public IngredientsDetailsHandler(IIngredientsProvider ingredientsProvider, IMainMenuHandler mainMenuHandler)
+        public IngredientsDetailsHandler(IIngredientsProvider ingredientsProvider)
         {
             _ingredientsProvider = ingredientsProvider;
-            _mainMenuHandler = mainMenuHandler;
         }
 
         public void GetIngredientsDetails()
         {
-            Console.Clear();
-            string text = "INGREDIENTS DETAILS MAIN MENU\n";
-            string text2 = "Please choose your action\n" +
-                "1. List of all ingredients in database ordered by names\n" +
-                "2. List of all ingredients in database ordered by calories\n" +
-                "3. List of all ingredients in database ordered by proteins\n" +
-                "4. List of all ingredients in database ordered by fat\n" +
-                "5. Go back to main menu";
-
-
-            PrintLinesInCenter(text);
-            Console.ReadKey();
-            Console.Clear();
-            PrintLinesInCenter(text2);
-            var input = Console.ReadLine();
-            switch (input)
+            bool inIngredientsDetailsMenu = true;
+            while (inIngredientsDetailsMenu)
             {
-                case "1":
-                    Console.Clear();
-                    OrderByName();
-                    break;
-                case "2":
-                    OrderByCalories();
-                    break;
-                case "3":
-                    OrderByProteins();
-                    break;
-                case "4":
-                    OrderByFat();
-                    break;
-                case "5":
-                    _mainMenuHandler.SelectMainOption();
-                    break;                    
-                default:
-                    Console.WriteLine("Incorrect command");
-                    return;
-            }
+                Console.Clear();
+                string text = "INGREDIENTS DETAILS MAIN MENU\n";
+                string text2 = "Please choose your action\n" +
+                    "1. List of all ingredients in database ordered by names\n" +
+                    "2. List of all ingredients in database ordered by calories\n" +
+                    "3. List of all ingredients in database ordered by proteins\n" +
+                    "4. List of all ingredients in database ordered by fat\n" +
+                    "5. Go back to main menu";
 
+
+                Console.WriteLine(text);
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine(text2);
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        OrderByName();
+                        break;
+                    case "2":
+                        OrderByCalories();
+                        break;
+                    case "3":
+                        OrderByProteins();
+                        break;
+                    case "4":
+                        OrderByFat();
+                        break;
+                    case "5":
+                        inIngredientsDetailsMenu = false;
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        continue;
+                }
+            }
             Console.ReadKey();
 
         }
         private static void PrintLinesInCenter(params string[] lines)
         {
-            int verticalStart = (Console.WindowHeight - lines.Length) / 2;
+            int verticalStart = (Console.WindowHeight) / 2;
             int verticalPosition = verticalStart;
             foreach (var line in lines)
             {
-                int horizontalStart = (Console.WindowWidth - line.Length) / 2;
+                int horizontalStart = (Console.WindowWidth) / 2;
                 Console.SetCursorPosition(horizontalStart, verticalPosition);
                 Console.Write(line);
                 ++verticalPosition;

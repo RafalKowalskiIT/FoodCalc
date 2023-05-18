@@ -23,55 +23,55 @@ namespace FoodCalc.UI
         }
         public void SelectYourOption()
         {
-            Console.Clear();
-            string text = "DISHES MAIN MENU\n";
-            string text2 = "Please choose your action\n" +
-                "1. List of all dishes in database\n" +
-                "2. Add new dish to database\n" +
-                "3. Find dish by id\n" +
-                "4. Show more dish data\n" +
-                "5. Save and go back to main menu";
-
-
-            PrintLinesInCenter(text);
-            Console.ReadKey();
-            Console.Clear();
-            PrintLinesInCenter(text2);
-            var input = Console.ReadLine();
-            switch (input)
+            bool inDishMenu = true;
+            while (inDishMenu)
             {
-                case "1":
-                    Console.Clear();
-                    WriteAllToConsole(_dishRepository);
-                    break;
-                case "2":
-                    AddNewDish(_dishRepository);
-                    break;
-                case "3":
-                    FindDishById(_dishRepository);
-                    break;
-                case "4":
-                    _dishesDetailsHandler.GetDishesDetails();
-                    break;
-                case "5":
-                    Console.Clear();
-                    CloseAndSave(_dishRepository);
-                    break;
-                default:
-                    Console.WriteLine("Incorrect command");
-                    return;
-            }
+                
+                string text = "DISHES MAIN MENU\n";
+                string text2 = "Please choose your action\n" +
+                    "1. List of all dishes in database\n" +
+                    "2. Add new dish to database\n" +
+                    "3. Find dish by id\n" +
+                    "4. Show more dish data\n" +
+                    "5. Save and go back to main menu";
 
+
+                Console.WriteLine(text);
+                Console.ReadKey();
+                Console.WriteLine(text2);
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        WriteAllToConsole(_dishRepository);
+                        break;
+                    case "2":
+                        AddNewDish(_dishRepository);
+                        break;
+                    case "3":
+                        FindDishById(_dishRepository);
+                        break;
+                    case "4":
+                        _dishesDetailsHandler.GetDishesDetails();
+                        break;
+                    case "5":
+                        inDishMenu = CloseAndSave(_dishRepository);
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        continue;
+                }
+            }
             Console.ReadKey();
                                     
         }
         private static void PrintLinesInCenter(params string[] lines)
         {
-            int verticalStart = (Console.WindowHeight - lines.Length) / 2;
+            int verticalStart = (Console.WindowHeight) / 2;
             int verticalPosition = verticalStart;
             foreach (var line in lines)
             {
-                int horizontalStart = (Console.WindowWidth - line.Length) / 2;
+                int horizontalStart = (Console.WindowWidth) / 2;
                 Console.SetCursorPosition(horizontalStart, verticalPosition);
                 Console.Write(line);
                 ++verticalPosition;

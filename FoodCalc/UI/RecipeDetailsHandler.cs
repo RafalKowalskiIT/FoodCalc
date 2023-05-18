@@ -11,56 +11,56 @@ namespace FoodCalc.UI
     public class RecipeDetailsHandler : IRecipeDetailsHandler
     {
         private readonly IRecipeProvider _recipeProvider;
-        private readonly IMainMenuHandler _mainMenuHandler;
 
-        public RecipeDetailsHandler(IRecipeProvider recipeProvider, IMainMenuHandler mainMenuHandler)
+        public RecipeDetailsHandler(IRecipeProvider recipeProvider)
         {
             _recipeProvider = recipeProvider;
-            _mainMenuHandler = mainMenuHandler;
         }
 
         public void GetRecipeDetails()
         {
-            Console.Clear();
-            string text = "RECIPES DETAILS MAIN MENU\n";
-            string text2 = "Please choose your action\n" +
-                "1. List of all recipes by ingredient\n" +
-                "2. List of all recipes by unique ingredients\n" +                
-                "3. Go back to main menu";
-
-
-            PrintLinesInCenter(text);
-            Console.ReadKey();
-            Console.Clear();
-            PrintLinesInCenter(text2);
-            var input = Console.ReadLine();
-            switch (input)
+            bool inRecipeDetailsMenu = true;
+            while (inRecipeDetailsMenu)
             {
-                case "1":
-                    Console.Clear();
-                    GetRecipesByIngredient();
-                    break;
-                case "2":
-                    GetUniqueIngredients();
-                    break;               
-                case "3":
-                    _mainMenuHandler.SelectMainOption();
-                    break;                    
-                default:
-                    Console.WriteLine("Incorrect command");
-                    return;
-            }
+                Console.Clear();
+                string text = "RECIPES DETAILS MAIN MENU\n";
+                string text2 = "Please choose your action\n" +
+                    "1. List of all recipes by ingredient\n" +
+                    "2. List of all recipes by unique ingredients\n" +
+                    "3. Go back to main menu";
 
+
+                Console.WriteLine(text);
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine(text2);
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":                        
+                        GetRecipesByIngredient();
+                        break;
+                    case "2":
+                        GetUniqueIngredients();
+                        break;
+                    case "3":
+                        inRecipeDetailsMenu = false;
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        continue;
+                }
+            }
             Console.ReadKey();
 
         }
         private static void PrintLinesInCenter(params string[] lines)
         {
-            int verticalStart = (Console.WindowHeight - lines.Length) / 2;
+            int verticalStart = (Console.WindowHeight) / 2;
             int verticalPosition = verticalStart;
             foreach (var line in lines)
             {
-                int horizontalStart = (Console.WindowWidth - line.Length) / 2;
+                int horizontalStart = (Console.WindowWidth) / 2;
                 Console.SetCursorPosition(horizontalStart, verticalPosition);
                 Console.Write(line);
                 ++verticalPosition;
